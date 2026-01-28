@@ -40,4 +40,9 @@ return [
         'class' => 'VentasController',
         'action' => 'index',
     ],
+        'login' => [
+        'controller' => __DIR__ . '/Controllers/LoginController.php',
+        'class' => 'LoginController',
+        'action' => 'index',
+    ],
 ];

@@ -45,4 +45,17 @@ class Inventario
         $stmt->execute();
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
+    public static function optionsWithProducto(): array
+    {
+        global $conn;
+        $stmt = $conn->prepare('SELECT i.INVENTARIO_ID AS id,
+                                       CONCAT(p.NOMBRE, " - ", i.TALLA, " / ", i.COLOR, " (Stock: ", i.STOCK, ")") AS label,
+                                       i.PRECIO AS precio,
+                                       i.STOCK AS stock
+                                FROM INVENTARIO i
+                                LEFT JOIN PRODUCTO p ON p.PRODUCTO_ID = i.PRODUCTO_ID
+                                ORDER BY p.NOMBRE, i.TALLA, i.COLOR');
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
 }

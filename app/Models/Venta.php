@@ -38,13 +38,23 @@ class Venta
     public static function allWithDetalles(): array
     {
         global $conn;
-        $stmt = $conn->prepare('SELECT v.*, dv.*, c.NOMBRE AS CLIENTE, e.NOMBRE AS EMPLEADO, i.INVENTARIO_ID AS INVENTARIO, p.NOMBRE AS PRODUCTO
+        $stmt = $conn->prepare('SELECT v.*,
+                                       dv.DETALLE_ID,
+                                       dv.INVENTARIO_ID,
+                                       dv.CANTIDAD,
+                                       dv.PRECIO_UNITARIO,
+                                       c.NOMBRE AS CLIENTE,
+                                       e.NOMBRE AS EMPLEADO,
+                                       p.NOMBRE AS PRODUCTO,
+                                       i.TALLA,
+                                       i.COLOR,
+                                       i.STOCK
                                 FROM VENTAS v
                                 LEFT JOIN CLIENTE c ON c.CLIENTE_ID = v.CLIENTE_ID
                                 LEFT JOIN EMPLEADO e ON e.EMPLEADO_ID = v.EMPLEADO_ID
-                                INNER JOIN DETALLE_VENTA dv ON dv.VENTA_ID = v.VENTA_ID
-                                INNER JOIN INVENTARIO i ON i.INVENTARIO_ID = dv.INVENTARIO_ID
-                                INNER JOIN PRODUCTO p ON p.PRODUCTO_ID = i.PRODUCTO_ID
+                                LEFT JOIN DETALLE_VENTA dv ON dv.VENTA_ID = v.VENTA_ID
+                                LEFT JOIN INVENTARIO i ON i.INVENTARIO_ID = dv.INVENTARIO_ID
+                                LEFT JOIN PRODUCTO p ON p.PRODUCTO_ID = i.PRODUCTO_ID
                                 ORDER BY v.VENTA_ID DESC, dv.DETALLE_ID ASC');
         $stmt->execute();
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);

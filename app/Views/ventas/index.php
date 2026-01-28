@@ -16,13 +16,19 @@
         </select>
       </div>
       <div class="col-md-4">
-        <label class="form-label">Producto</label>
-        <select name="PRODUCTO_ID" class="form-select" required>
+        <label class="form-label">Inventario</label>
+        <select name="INVENTARIO_ID" class="form-select" required>
           <option value="">Seleccione...</option>
-          <?php foreach ($productos as $p): ?>
-            <option value="<?= h($p['id']) ?>" <?= (string)($edit['PRODUCTO_ID'] ?? '') === (string)$p['id'] ? 'selected' : '' ?>><?= h($p['label']) ?> (ID <?= h($p['id']) ?>)</option>
+          <?php foreach ($inventarioOptions as $i): ?>
+            <option value="<?= h($i['id']) ?>" <?= (string)($edit['INVENTARIO_ID'] ?? '') === (string)$i['id'] ? 'selected' : '' ?>>
+              <?= h($i['label']) ?> (ID <?= h($i['id']) ?>)
+            </option>
           <?php endforeach; ?>
         </select>
+      </div>
+      <div class="col-md-2">
+        <label class="form-label">Cantidad</label>
+        <input type="number" name="CANTIDAD" min="1" class="form-control" value="<?= h($edit['CANTIDAD'] ?? 1) ?>">
       </div>
       <div class="col-md-4">
         <label class="form-label">Empleado</label>
@@ -59,7 +65,7 @@
       <table class="table table-striped align-middle">
         <thead>
           <tr>
-            <th>ID</th><th>Cliente</th><th>Empleado</th><th>Fecha</th><th>Producto</th><th>Tipo</th><th>Total</th><th>Método</th><th class="text-end">Acciones</th>
+            <th>ID</th><th>Cliente</th><th>Empleado</th><th>Fecha</th><th>Producto</th><th>Inventario</th><th>Cantidad</th><th>Precio U.</th><th>Total</th><th>Método</th><th class="text-end">Acciones</th>
           </tr>
         </thead>
         <tbody>
@@ -69,8 +75,15 @@
               <td><?= h($r['CLIENTE']) ?></td>
               <td><?= h($r['EMPLEADO']) ?></td>
               <td><?= h($r['FECHA']) ?></td>
-              <td><?= h($r['PRODUCTO']) ?></td>
+               <?php
+                $talla = $r['TALLA'] ?? '';
+                $color = $r['COLOR'] ?? '';
+                $detalleProducto = trim($talla . ' ' . $color);
+              ?>
+              <td><?= h($r['PRODUCTO']) ?><?= $detalleProducto ? ' (' . h($detalleProducto) . ')' : '' ?></td>
               <td><?= h($r['INVENTARIO_ID']) ?></td>
+              <td><?= h($r['CANTIDAD']) ?></td>
+              <td><?= h($r['PRECIO_UNITARIO']) ?></td>
               <td><?= h($r['TOTAL']) ?></td>
               <td><?= h($r['METODO_PAGO']) ?></td>
               <td class="text-end">
