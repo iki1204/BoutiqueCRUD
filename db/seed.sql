@@ -1,51 +1,154 @@
-/* Seed data for Boutique CRUD - generated */
-SET FOREIGN_KEY_CHECKS=0;
-DELETE FROM _CODE_DETALLE_VENTA;
-DELETE FROM _CODE_VENTAS;
-DELETE FROM _CODE_PRODUCTO;
-DELETE FROM _CODE_CATEGORIA;
-DELETE FROM _CODE_TALLA;
-DELETE FROM _CODE_PROVEEDOR;
-DELETE FROM _CODE_CLIENTE;
-DELETE FROM _CODE_EMPLEADO;
-SET FOREIGN_KEY_CHECKS=1;
+/*==============================================================*/
+/* DBMS name:      MySQL 5.0                                    */
+/* Created on:     4/2/2026 0:04:06                             */
+/*==============================================================*/
 
-INSERT INTO _CODE_CATEGORIA (CATEGORIA_ID, CODIGO, DESCRIPCION) VALUES
-(1,'CAT-001','Camisas'),
-(2,'CAT-002','Pantalones'),
-(3,'CAT-003','Zapatos');
 
-INSERT INTO _CODE_TALLA (TALLA_ID, CODIGO, DESCRIPCION) VALUES
-(1,'S','Small'),
-(2,'M','Medium'),
-(3,'L','Large'),
-(4,'42','Talla 42');
+drop table if exists CATEGORIA;
 
-INSERT INTO _CODE_PROVEEDOR (PROVEEDOR_ID, NOMBRE_EMPRESA, TELEFONO, EMAIL, DIRECCION, CIUDAD) VALUES
-(1,'Textiles Andinos','0999999999','ventas@textilesandinos.com','Av. Principal 123','Quito'),
-(2,'Calzado Sierra','0988888888','contacto@calzadosierra.com','Calle 10 y Av. 2','Cuenca');
+drop table if exists CLIENTE;
 
-INSERT INTO _CODE_CLIENTE (CLIENTE_ID, CODIGO, APELLIDO, TELEFONO, EMAIL, DIRECCION) VALUES
-(1,'CLI-001','Saa','0977777777','ikian@example.com','Sangolquí'),
-(2,'CLI-002','Perez','0966666666','perez@example.com','Quito');
+drop table if exists DETALLE_VENTA;
 
-INSERT INTO _CODE_EMPLEADO (EMPLEADO_ID, CODIGO, APELLIDO, CARGO, TELEFONO, DIRECCION, FECHA_INGRESO) VALUES
-(1,'EMP-001','Gomez','Cajero','0955555555','Quito','2025-09-10'),
-(2,'EMP-002','Martinez','Vendedor','0944444444','Sangolquí','2025-11-01');
+drop table if exists EMPLEADO;
 
-INSERT INTO _CODE_PRODUCTO (PRODUCTO_ID, CATEGORIA_ID, PROVEEDOR_ID, TALLA_ID, CODIGO, DESCRIPCION, COLOR, MARCA, STOCK, PRECIO) VALUES
-(1,1,1,2,'PROD-001','Camisa Oxford','Blanco','AndesWear',50,19.99),
-(2,2,1,3,'PROD-002','Pantalón Chino','Beige','AndesWear',35,24.50),
-(3,3,2,4,'PROD-003','Zapato Casual','Negro','SierraStep',20,39.90);
+drop table if exists PRODUCTO;
 
--- Venta demo
-INSERT INTO _CODE_VENTAS (VENTA_ID, CLIENTE_ID, EMPLEADO_ID, FECHA, TOTAL, ESTADO, METODO_PAGO) VALUES
-(1,1,2,NOW(),(19.99*2 + 24.50*1),'COMPLETADA','EFECTIVO');
+drop table if exists PROVEEDOR;
 
-INSERT INTO _CODE_DETALLE_VENTA (DETALLE_ID, VENTA_ID, PRODUCTO_ID, CANTIDAD, PRECIO) VALUES
-(1,1,1,2,19.99),
-(2,1,2,1,24.50);
+drop table if exists TALLA;
 
--- Ajuste de stock demo
-UPDATE _CODE_PRODUCTO SET STOCK = STOCK - 2 WHERE PRODUCTO_ID=1;
-UPDATE _CODE_PRODUCTO SET STOCK = STOCK - 1 WHERE PRODUCTO_ID=2;
+drop table if exists VENTAS;
+
+/*==============================================================*/
+/* Table: CATEGORIA                                             */
+/*==============================================================*/
+create table CATEGORIA
+(
+   CATEGORIA_ID         int not null,
+   CODIGO               varchar(50),
+   DESCRIPCION          varchar(200),
+   primary key (CATEGORIA_ID)
+);
+
+/*==============================================================*/
+/* Table: CLIENTE                                               */
+/*==============================================================*/
+create table CLIENTE
+(
+   CLIENTE_ID           int not null,
+   NOMBRE               varchar(100),
+   APELLIDO             varchar(50),
+   TELEFONO             varchar(15),
+   EMAIL                varchar(100),
+   DIRECCION            varchar(300),
+   primary key (CLIENTE_ID)
+);
+
+/*==============================================================*/
+/* Table: DETALLE_VENTA                                         */
+/*==============================================================*/
+create table DETALLE_VENTA
+(
+   DETALLE_ID           int not null,
+   VENTA_ID             int not null,
+   PRODUCTO_ID          int not null,
+   CANTIDAD             int,
+   PRECIO               decimal(10,2),
+   primary key (DETALLE_ID)
+);
+
+/*==============================================================*/
+/* Table: EMPLEADO                                              */
+/*==============================================================*/
+create table EMPLEADO
+(
+   EMPLEADO_ID          int not null,
+   NOMBRE               varchar(100),
+   APELLIDO             varchar(50),
+   CARGO                varchar(50),
+   TELEFONO             varchar(15),
+   DIRECCION            varchar(300),
+   FECHA_INGRESO        timestamp,
+   primary key (EMPLEADO_ID)
+);
+
+/*==============================================================*/
+/* Table: PRODUCTO                                              */
+/*==============================================================*/
+create table PRODUCTO
+(
+   PRODUCTO_ID          int not null,
+   CATEGORIA_ID         int not null,
+   PROVEEDOR_ID         int not null,
+   TALLA_ID             int not null,
+   CODIGO               varchar(50),
+   DESCRIPCION          varchar(200),
+   COLOR                varchar(10),
+   MARCA                varchar(30),
+   STOCK                int,
+   PRECIO               decimal(10,2),
+   primary key (PRODUCTO_ID)
+);
+
+/*==============================================================*/
+/* Table: PROVEEDOR                                             */
+/*==============================================================*/
+create table PROVEEDOR
+(
+   PROVEEDOR_ID         int not null,
+   NOMBRE_EMPRESA       varchar(50),
+   TELEFONO             varchar(15),
+   EMAIL                varchar(100),
+   DIRECCION            varchar(300),
+   CIUDAD               varchar(50),
+   primary key (PROVEEDOR_ID)
+);
+
+/*==============================================================*/
+/* Table: TALLA                                                 */
+/*==============================================================*/
+create table TALLA
+(
+   TALLA_ID             int not null,
+   CODIGO               varchar(50),
+   DESCRIPCION          varchar(200),
+   primary key (TALLA_ID)
+);
+
+/*==============================================================*/
+/* Table: VENTAS                                                */
+/*==============================================================*/
+create table VENTAS
+(
+   VENTA_ID             int not null,
+   CLIENTE_ID           int not null,
+   EMPLEADO_ID          int not null,
+   FECHA                datetime,
+   TOTAL                decimal(10,2),
+   ESTADO               varchar(100),
+   METODO_PAGO          varchar(100),
+   primary key (VENTA_ID)
+);
+
+alter table DETALLE_VENTA add constraint FK_DETALLE_VENTA foreign key (VENTA_ID)
+      references VENTAS (VENTA_ID) on delete restrict on update restrict;
+
+alter table DETALLE_VENTA add constraint FK_DETALLE_VENTA2 foreign key (PRODUCTO_ID)
+      references PRODUCTO (PRODUCTO_ID) on delete restrict on update restrict;
+
+alter table PRODUCTO add constraint FK_CATEGORIA_PRODUCTO foreign key (CATEGORIA_ID)
+      references CATEGORIA (CATEGORIA_ID) on delete restrict on update restrict;
+
+alter table PRODUCTO add constraint FK_PROVEEDOR_PRODUCTO foreign key (PROVEEDOR_ID)
+      references PROVEEDOR (PROVEEDOR_ID) on delete restrict on update restrict;
+
+alter table PRODUCTO add constraint FK_TALLA_PRODUCTO foreign key (TALLA_ID)
+      references TALLA (TALLA_ID) on delete restrict on update restrict;
+
+alter table VENTAS add constraint FK_CLIENTE_VENTAS foreign key (CLIENTE_ID)
+      references CLIENTE (CLIENTE_ID) on delete restrict on update restrict;
+
+alter table VENTAS add constraint FK_EMPLEADO_VENTA foreign key (EMPLEADO_ID)
+      references EMPLEADO (EMPLEADO_ID) on delete restrict on update restrict;
+
