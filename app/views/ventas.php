@@ -1,6 +1,5 @@
 <?php
 $page_title = $title;
-$page_subtitle = "Gestión de ventas y su detalle (tabla transitiva)";
 ob_start();
 ?>
 <?php if ($action === 'list'): ?>

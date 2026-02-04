@@ -1,10 +1,9 @@
 <?php
 $page_title = $title;
-$page_subtitle = "CRUD de " . $title;
 ob_start();
 ?>
 <div class="d-flex align-items-center justify-content-between mb-3">
-  <div class="text-muted small">Tabla: <code><?= h($table) ?></code></div>
+  <div class="text-muted small">Lista de <code><?= h($title) ?></code></div>
   <a class="btn btn-primary" href="<?= url('/public/index.php?m=' . h($module) . '&a=create') ?>">
     <i class="bi bi-plus-lg me-1"></i>Nuevo
   </a>

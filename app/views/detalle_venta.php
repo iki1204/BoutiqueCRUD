@@ -1,12 +1,8 @@
 <?php
 $page_title = $title;
-$page_subtitle = $venta_id ? "Detalle filtrado por Venta #$venta_id" : "Todas las líneas de detalle";
 ob_start();
 ?>
 <div class="d-flex align-items-center justify-content-between mb-3">
-  <div class="text-muted small">
-    Tabla transitiva: <code>_CODE_DETALLE_VENTA</code> enlaza <code>_CODE_VENTAS</code> con <code>_CODE_PRODUCTO</code>.
-  </div>
   <div class="d-flex gap-2">
     <?php if ($venta_id): ?>
       <a class="btn btn-outline-secondary" href="<?= url('/public/index.php?m=ventas&a=view&id=' . h($venta_id)) ?>">Volver a venta</a>

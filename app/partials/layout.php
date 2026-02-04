@@ -23,7 +23,7 @@ $m = $_GET['m'] ?? '';
           <span class="badge bg-primary rounded-pill">Admin</span>
           <div>
             <div class="fw-semibold"><?= h($config['app']['name']) ?></div>
-            <div class="text-muted small">Dashboard & CRUD</div>
+            <div class="text-muted small">Dashboard</div>
           </div>
         </div>
       </div>
@@ -39,7 +39,7 @@ $m = $_GET['m'] ?? '';
         <?php endforeach; ?>
       </div>
       <div class="mt-auto p-3 border-top text-muted small">
-        <?= date('Y') ?> · Boutique CRUD
+        <?= date('Y') ?> · Boutique
       </div>
     </aside>
 
@@ -67,7 +67,7 @@ $m = $_GET['m'] ?? '';
         <?= $content ?>
 
         <div class="text-center text-muted small mt-5">
-          Hecho con PHP + Bootstrap · <?= date('Y-m-d') ?>
+          Hecho por Ikian Saa · <?= date('Y-m-d') ?>
         </div>
       </div>
     </main>

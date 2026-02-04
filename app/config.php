@@ -1,6 +1,4 @@
 <?php
-// config.php
-// Ajusta estos valores según tu entorno.
 return [
   'db' => [
     'host' => getenv('DB_HOST') ?: '127.0.0.1',
@@ -11,6 +9,6 @@ return [
   ],
   'app' => [
     'name' => 'Boutique Admin',
-    'base_url' => '', // si lo despliegas en subcarpeta, ej: '/boutique_crud/public'
+    'base_url' => '/BoutiqueCrud', // si lo despliegas en subcarpeta, ej: '/boutique_crud/public'
   ],
 ];
