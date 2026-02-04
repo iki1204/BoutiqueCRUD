@@ -2,6 +2,8 @@
 require_once __DIR__ . '/../app/db.php';
 require_once __DIR__ . '/../app/helpers.php';
 
+auth_require();
+
 $m = $_GET['m'] ?? '';
 $meta = require __DIR__ . '/../app/meta.php';
 
@@ -27,6 +29,12 @@ if ($m === '') {
 if (!isset($meta[$m])) {
   http_response_code(404);
   echo "Ruta no encontrada.";
+  exit;
+}
+
+if (!auth_can_access($m)) {
+  http_response_code(403);
+  echo "No tienes permisos para acceder a este módulo.";
   exit;
 }
 

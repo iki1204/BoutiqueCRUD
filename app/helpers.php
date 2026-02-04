@@ -39,3 +39,40 @@ function csrf_check(): void {
     exit;
   }
 }
+
+function auth_user(): ?array {
+  if (session_status() !== PHP_SESSION_ACTIVE) session_start();
+  return $_SESSION['auth'] ?? null;
+}
+
+function auth_require(): void {
+  if (auth_user()) return;
+  flash_set('warning', 'Inicia sesión para continuar.');
+  redirect(url('/public/login.php'));
+}
+
+function auth_role(): ?string {
+  $user = auth_user();
+  return $user['role'] ?? null;
+}
+
+function auth_permissions(): array {
+  $config = require __DIR__ . '/config.php';
+  return $config['auth']['roles'] ?? [];
+}
+
+function auth_can_access(?string $module): bool {
+  if ($module === null || $module === '') return true;
+  $role = auth_role();
+  if (!$role) return false;
+  $roles = auth_permissions();
+  if (!isset($roles[$role])) return false;
+  $allowed = $roles[$role]['modules'] ?? [];
+  if ($allowed === '*') return true;
+  return in_array($module, $allowed, true);
+}
+
+function auth_logout(): void {
+  if (session_status() !== PHP_SESSION_ACTIVE) session_start();
+  unset($_SESSION['auth']);
+}

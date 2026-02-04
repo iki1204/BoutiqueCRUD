@@ -3,6 +3,12 @@
 $config = require __DIR__ . '/config.php';
 $db = $config['db'];
 
+if (session_status() !== PHP_SESSION_ACTIVE) session_start();
+if (!empty($_SESSION['auth']['db_user'])) {
+  $db['user'] = $_SESSION['auth']['db_user'];
+  $db['pass'] = $_SESSION['auth']['db_pass'] ?? '';
+}
+
 $dsn = "mysql:host={$db['host']};dbname={$db['name']};charset={$db['charset']}";
 $options = [
   PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,

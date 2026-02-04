@@ -4,6 +4,9 @@ $config = require __DIR__ . '/../config.php';
 $meta = require __DIR__ . '/../meta.php';
 $flash = flash_get();
 $m = $_GET['m'] ?? '';
+$user = auth_user();
+$roleLabel = $user['role_label'] ?? 'Usuario';
+$visibleMeta = array_filter($meta, fn($def, $key) => auth_can_access($key), ARRAY_FILTER_USE_BOTH);
 ?>
 <!doctype html>
 <html lang="es">
@@ -20,10 +23,10 @@ $m = $_GET['m'] ?? '';
     <aside class="sidebar border-end bg-white">
       <div class="p-3 border-bottom">
         <div class="d-flex align-items-center gap-2">
-          <span class="badge bg-primary rounded-pill">Admin</span>
+          <span class="badge bg-primary rounded-pill"><?= h($roleLabel) ?></span>
           <div>
             <div class="fw-semibold"><?= h($config['app']['name']) ?></div>
-            <div class="text-muted small">Dashboard</div>
+            <div class="text-muted small"><?= h($user['user'] ?? 'Dashboard') ?></div>
           </div>
         </div>
       </div>
@@ -32,7 +35,7 @@ $m = $_GET['m'] ?? '';
           <i class="bi bi-speedometer2 me-2"></i>Inicio
         </a>
         <div class="text-uppercase small text-muted px-3 mt-3 mb-1">Gestión</div>
-        <?php foreach ($meta as $key => $def): ?>
+        <?php foreach ($visibleMeta as $key => $def): ?>
           <a class="nav-link px-3 py-2 rounded <?= $m===$key?'active':'' ?>" href="<?= url('/public/index.php?m=' . $key) ?>">
             <i class="bi bi-table me-2"></i><?= h($def['title']) ?>
           </a>
@@ -53,8 +56,11 @@ $m = $_GET['m'] ?? '';
           <div class="d-flex gap-2">
             <a class="btn btn-outline-secondary btn-sm" href="<?= url('/public/index.php') ?>"><i class="bi bi-house"></i></a>
             <button class="btn btn-outline-secondary btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#helpCanvas">
-              <i class="bi bi-question-circle"></i>
+              <i class="bi bi-person-circle"></i>
             </button>
+            <a class="btn btn-outline-danger btn-sm" href="<?= url('/public/logout.php') ?>">
+              <i class="bi bi-box-arrow-right"></i>
+            </a>
           </div>
         </div>
       </header>
