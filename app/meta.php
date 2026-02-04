@@ -3,7 +3,7 @@
 return [
   'categoria' => [
     'title' => 'Categorías',
-    'table' => '_CODE_CATEGORIA',
+    'table' => 'CATEGORIA',
     'pk' => 'CATEGORIA_ID',
     'columns' => [
       'CATEGORIA_ID' => ['label' => 'ID', 'type' => 'number', 'readonly' => true],
@@ -13,7 +13,7 @@ return [
   ],
   'talla' => [
     'title' => 'Tallas',
-    'table' => '_CODE_TALLA',
+    'table' => 'TALLA',
     'pk' => 'TALLA_ID',
     'columns' => [
       'TALLA_ID' => ['label' => 'ID', 'type' => 'number', 'readonly' => true],
@@ -23,7 +23,7 @@ return [
   ],
   'proveedor' => [
     'title' => 'Proveedores',
-    'table' => '_CODE_PROVEEDOR',
+    'table' => 'PROVEEDOR',
     'pk' => 'PROVEEDOR_ID',
     'columns' => [
       'PROVEEDOR_ID' => ['label' => 'ID', 'type' => 'number', 'readonly' => true],
@@ -36,11 +36,11 @@ return [
   ],
   'cliente' => [
     'title' => 'Clientes',
-    'table' => '_CODE_CLIENTE',
+    'table' => 'CLIENTE',
     'pk' => 'CLIENTE_ID',
     'columns' => [
       'CLIENTE_ID' => ['label' => 'ID', 'type' => 'number', 'readonly' => true],
-      'CODIGO' => ['label' => 'Código', 'type' => 'text', 'required' => true],
+      'NOMBRE' => ['label' => 'Nombre', 'type' => 'text', 'required' => true],
       'APELLIDO' => ['label' => 'Apellido', 'type' => 'text', 'required' => true],
       'TELEFONO' => ['label' => 'Teléfono', 'type' => 'text'],
       'EMAIL' => ['label' => 'Email', 'type' => 'email'],
@@ -49,11 +49,11 @@ return [
   ],
   'empleado' => [
     'title' => 'Empleados',
-    'table' => '_CODE_EMPLEADO',
+    'table' => 'EMPLEADO',
     'pk' => 'EMPLEADO_ID',
     'columns' => [
       'EMPLEADO_ID' => ['label' => 'ID', 'type' => 'number', 'readonly' => true],
-      'CODIGO' => ['label' => 'Código', 'type' => 'text', 'required' => true],
+      'NOMBRE' => ['label' => 'Nombre', 'type' => 'text', 'required' => true],
       'APELLIDO' => ['label' => 'Apellido', 'type' => 'text', 'required' => true],
       'CARGO' => ['label' => 'Cargo', 'type' => 'text'],
       'TELEFONO' => ['label' => 'Teléfono', 'type' => 'text'],
@@ -63,13 +63,13 @@ return [
   ],
   'producto' => [
     'title' => 'Productos',
-    'table' => '_CODE_PRODUCTO',
+    'table' => 'PRODUCTO',
     'pk' => 'PRODUCTO_ID',
     'columns' => [
       'PRODUCTO_ID' => ['label' => 'ID', 'type' => 'number', 'readonly' => true],
-      'CATEGORIA_ID' => ['label' => 'Categoría', 'type' => 'fk', 'required' => true, 'ref' => ['_CODE_CATEGORIA','CATEGORIA_ID','DESCRIPCION']],
-      'PROVEEDOR_ID' => ['label' => 'Proveedor', 'type' => 'fk', 'required' => true, 'ref' => ['_CODE_PROVEEDOR','PROVEEDOR_ID','NOMBRE_EMPRESA']],
-      'TALLA_ID' => ['label' => 'Talla', 'type' => 'fk', 'required' => true, 'ref' => ['_CODE_TALLA','TALLA_ID','DESCRIPCION']],
+      'CATEGORIA_ID' => ['label' => 'Categoría', 'type' => 'fk', 'required' => true, 'ref' => ['CATEGORIA','CATEGORIA_ID','DESCRIPCION']],
+      'PROVEEDOR_ID' => ['label' => 'Proveedor', 'type' => 'fk', 'required' => true, 'ref' => ['PROVEEDOR','PROVEEDOR_ID','NOMBRE_EMPRESA']],
+      'TALLA_ID' => ['label' => 'Talla', 'type' => 'fk', 'required' => true, 'ref' => ['TALLA','TALLA_ID','DESCRIPCION']],
       'CODIGO' => ['label' => 'Código', 'type' => 'text', 'required' => true],
       'DESCRIPCION' => ['label' => 'Descripción', 'type' => 'text', 'required' => true],
       'COLOR' => ['label' => 'Color', 'type' => 'text'],

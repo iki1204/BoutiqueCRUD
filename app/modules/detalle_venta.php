@@ -12,14 +12,14 @@ csrf_check();
 if ($action === 'delete' && $id) {
   $pdo->beginTransaction();
   try {
-    $row = $pdo->prepare("SELECT * FROM _CODE_DETALLE_VENTA WHERE DETALLE_ID=?");
+    $row = $pdo->prepare("SELECT * FROM DETALLE_VENTA WHERE DETALLE_ID=?");
     $row->execute([$id]);
     $d = $row->fetch();
     if ($d) {
       // restore stock and subtract total
-      $pdo->prepare("UPDATE _CODE_PRODUCTO SET STOCK = STOCK + ? WHERE PRODUCTO_ID=?")->execute([$d['CANTIDAD'], $d['PRODUCTO_ID']]);
-      $pdo->prepare("UPDATE _CODE_VENTAS SET TOTAL = TOTAL - (? * ?) WHERE VENTA_ID=?")->execute([$d['CANTIDAD'], $d['PRECIO'], $d['VENTA_ID']]);
-      $pdo->prepare("DELETE FROM _CODE_DETALLE_VENTA WHERE DETALLE_ID=?")->execute([$id]);
+      $pdo->prepare("UPDATE PRODUCTO SET STOCK = STOCK + ? WHERE PRODUCTO_ID=?")->execute([$d['CANTIDAD'], $d['PRODUCTO_ID']]);
+      $pdo->prepare("UPDATE VENTAS SET TOTAL = TOTAL - (? * ?) WHERE VENTA_ID=?")->execute([$d['CANTIDAD'], $d['PRECIO'], $d['VENTA_ID']]);
+      $pdo->prepare("DELETE FROM DETALLE_VENTA WHERE DETALLE_ID=?")->execute([$id]);
     }
     $pdo->commit();
     flash_set('success','Detalle eliminado (y totales ajustados).');
@@ -42,9 +42,9 @@ if ($venta_id) {
 $sql = "SELECT d.*, 
           CONCAT(p.CODIGO,' - ',p.DESCRIPCION) AS PRODUCTO,
           v.FECHA AS FECHA_VENTA
-        FROM _CODE_DETALLE_VENTA d
-        JOIN _CODE_PRODUCTO p ON p.PRODUCTO_ID=d.PRODUCTO_ID
-        JOIN _CODE_VENTAS v ON v.VENTA_ID=d.VENTA_ID
+        FROM DETALLE_VENTA d
+        JOIN PRODUCTO p ON p.PRODUCTO_ID=d.PRODUCTO_ID
+        JOIN VENTAS v ON v.VENTA_ID=d.VENTA_ID
         $where
         ORDER BY d.DETALLE_ID DESC";
 $stmt = $pdo->prepare($sql);

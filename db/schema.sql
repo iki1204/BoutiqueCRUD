@@ -4,40 +4,40 @@
 /*==============================================================*/
 
 
-drop table if exists _CODE_CATEGORIA;
+drop table if exists CATEGORIA;
 
-drop table if exists _CODE_CLIENTE;
+drop table if exists CLIENTE;
 
-drop table if exists _CODE_DETALLE_VENTA;
+drop table if exists DETALLE_VENTA;
 
-drop table if exists _CODE_EMPLEADO;
+drop table if exists EMPLEADO;
 
-drop table if exists _CODE_PRODUCTO;
+drop table if exists PRODUCTO;
 
-drop table if exists _CODE_PROVEEDOR;
+drop table if exists PROVEEDOR;
 
-drop table if exists _CODE_TALLA;
+drop table if exists TALLA;
 
-drop table if exists _CODE_VENTAS;
+drop table if exists VENTAS;
 
 /*==============================================================*/
-/* Table: _CODE_CATEGORIA                                       */
+/* Table: CATEGORIA                                             */
 /*==============================================================*/
-create table _CODE_CATEGORIA
+create table CATEGORIA
 (
-   CATEGORIA_ID         int not null,
+   CATEGORIA_ID         int not null auto_increment,
    CODIGO               varchar(50),
    DESCRIPCION          varchar(200),
    primary key (CATEGORIA_ID)
 );
 
 /*==============================================================*/
-/* Table: _CODE_CLIENTE                                         */
+/* Table: CLIENTE                                               */
 /*==============================================================*/
-create table _CODE_CLIENTE
+create table CLIENTE
 (
-   CLIENTE_ID           int not null,
-   CODIGO               varchar(50),
+   CLIENTE_ID           int not null auto_increment,
+   NOMBRE               varchar(100),
    APELLIDO             varchar(50),
    TELEFONO             varchar(15),
    EMAIL                varchar(100),
@@ -46,11 +46,11 @@ create table _CODE_CLIENTE
 );
 
 /*==============================================================*/
-/* Table: _CODE_DETALLE_VENTA                                   */
+/* Table: DETALLE_VENTA                                         */
 /*==============================================================*/
-create table _CODE_DETALLE_VENTA
+create table DETALLE_VENTA
 (
-   DETALLE_ID           int not null,
+   DETALLE_ID           int not null auto_increment,
    VENTA_ID             int not null,
    PRODUCTO_ID          int not null,
    CANTIDAD             int,
@@ -59,12 +59,12 @@ create table _CODE_DETALLE_VENTA
 );
 
 /*==============================================================*/
-/* Table: _CODE_EMPLEADO                                        */
+/* Table: EMPLEADO                                              */
 /*==============================================================*/
-create table _CODE_EMPLEADO
+create table EMPLEADO
 (
-   EMPLEADO_ID          int not null,
-   CODIGO               varchar(50),
+   EMPLEADO_ID          int not null auto_increment,
+   NOMBRE               varchar(100),
    APELLIDO             varchar(50),
    CARGO                varchar(50),
    TELEFONO             varchar(15),
@@ -74,11 +74,11 @@ create table _CODE_EMPLEADO
 );
 
 /*==============================================================*/
-/* Table: _CODE_PRODUCTO                                        */
+/* Table: PRODUCTO                                              */
 /*==============================================================*/
-create table _CODE_PRODUCTO
+create table PRODUCTO
 (
-   PRODUCTO_ID          int not null,
+   PRODUCTO_ID          int not null auto_increment,
    CATEGORIA_ID         int not null,
    PROVEEDOR_ID         int not null,
    TALLA_ID             int not null,
@@ -92,11 +92,11 @@ create table _CODE_PRODUCTO
 );
 
 /*==============================================================*/
-/* Table: _CODE_PROVEEDOR                                       */
+/* Table: PROVEEDOR                                             */
 /*==============================================================*/
-create table _CODE_PROVEEDOR
+create table PROVEEDOR
 (
-   PROVEEDOR_ID         int not null,
+   PROVEEDOR_ID         int not null auto_increment,
    NOMBRE_EMPRESA       varchar(50),
    TELEFONO             varchar(15),
    EMAIL                varchar(100),
@@ -106,22 +106,22 @@ create table _CODE_PROVEEDOR
 );
 
 /*==============================================================*/
-/* Table: _CODE_TALLA                                           */
+/* Table: TALLA                                                 */
 /*==============================================================*/
-create table _CODE_TALLA
+create table TALLA
 (
-   TALLA_ID             int not null,
+   TALLA_ID             int not null auto_increment,
    CODIGO               varchar(50),
    DESCRIPCION          varchar(200),
    primary key (TALLA_ID)
 );
 
 /*==============================================================*/
-/* Table: _CODE_VENTAS                                          */
+/* Table: VENTAS                                                */
 /*==============================================================*/
-create table _CODE_VENTAS
+create table VENTAS
 (
-   VENTA_ID             int not null,
+   VENTA_ID             int not null auto_increment,
    CLIENTE_ID           int not null,
    EMPLEADO_ID          int not null,
    FECHA                datetime,
@@ -131,24 +131,23 @@ create table _CODE_VENTAS
    primary key (VENTA_ID)
 );
 
-alter table _CODE_DETALLE_VENTA add constraint FK_DETALLE_VENTA foreign key (VENTA_ID)
-      references _CODE_VENTAS (VENTA_ID) on delete restrict on update restrict;
+alter table DETALLE_VENTA add constraint FK_DETALLE_VENTA foreign key (VENTA_ID)
+      references VENTAS (VENTA_ID) on delete restrict on update restrict;
 
-alter table _CODE_DETALLE_VENTA add constraint FK_DETALLE_VENTA2 foreign key (PRODUCTO_ID)
-      references _CODE_PRODUCTO (PRODUCTO_ID) on delete restrict on update restrict;
+alter table DETALLE_VENTA add constraint FK_DETALLE_VENTA2 foreign key (PRODUCTO_ID)
+      references PRODUCTO (PRODUCTO_ID) on delete restrict on update restrict;
 
-alter table _CODE_PRODUCTO add constraint FK_CATEGORIA_PRODUCTO foreign key (CATEGORIA_ID)
-      references _CODE_CATEGORIA (CATEGORIA_ID) on delete restrict on update restrict;
+alter table PRODUCTO add constraint FK_CATEGORIA_PRODUCTO foreign key (CATEGORIA_ID)
+      references CATEGORIA (CATEGORIA_ID) on delete restrict on update restrict;
 
-alter table _CODE_PRODUCTO add constraint FK_PROVEEDOR_PRODUCTO foreign key (PROVEEDOR_ID)
-      references _CODE_PROVEEDOR (PROVEEDOR_ID) on delete restrict on update restrict;
+alter table PRODUCTO add constraint FK_PROVEEDOR_PRODUCTO foreign key (PROVEEDOR_ID)
+      references PROVEEDOR (PROVEEDOR_ID) on delete restrict on update restrict;
 
-alter table _CODE_PRODUCTO add constraint FK_TALLA_PRODUCTO foreign key (TALLA_ID)
-      references _CODE_TALLA (TALLA_ID) on delete restrict on update restrict;
+alter table PRODUCTO add constraint FK_TALLA_PRODUCTO foreign key (TALLA_ID)
+      references TALLA (TALLA_ID) on delete restrict on update restrict;
 
-alter table _CODE_VENTAS add constraint FK_CLIENTE_VENTAS foreign key (CLIENTE_ID)
-      references _CODE_CLIENTE (CLIENTE_ID) on delete restrict on update restrict;
+alter table VENTAS add constraint FK_CLIENTE_VENTAS foreign key (CLIENTE_ID)
+      references CLIENTE (CLIENTE_ID) on delete restrict on update restrict;
 
-alter table _CODE_VENTAS add constraint FK_EMPLEADO_VENTA foreign key (EMPLEADO_ID)
-      references _CODE_EMPLEADO (EMPLEADO_ID) on delete restrict on update restrict;
-
+alter table VENTAS add constraint FK_EMPLEADO_VENTA foreign key (EMPLEADO_ID)
+      references EMPLEADO (EMPLEADO_ID) on delete restrict on update restrict;

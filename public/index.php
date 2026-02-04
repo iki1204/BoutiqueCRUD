@@ -10,15 +10,15 @@ $meta = require __DIR__ . '/../app/meta.php';
 if ($m === '') {
   // Dashboard counts
   $cards = [
-    ['label'=>'Productos','value'=>$pdo->query("SELECT COUNT(*) c FROM _CODE_PRODUCTO")->fetch()['c'],'icon'=>'bi-bag','href'=>url('/public/index.php?m=producto')],
-    ['label'=>'Clientes','value'=>$pdo->query("SELECT COUNT(*) c FROM _CODE_CLIENTE")->fetch()['c'],'icon'=>'bi-people','href'=>url('/public/index.php?m=cliente')],
-    ['label'=>'Ventas','value'=>$pdo->query("SELECT COUNT(*) c FROM _CODE_VENTAS")->fetch()['c'],'icon'=>'bi-receipt','href'=>url('/public/index.php?m=ventas')],
-    ['label'=>'Proveedores','value'=>$pdo->query("SELECT COUNT(*) c FROM _CODE_PROVEEDOR")->fetch()['c'],'icon'=>'bi-truck','href'=>url('/public/index.php?m=proveedor')],
+    ['label'=>'Productos','value'=>$pdo->query("SELECT COUNT(*) c FROM PRODUCTO")->fetch()['c'],'icon'=>'bi-bag','href'=>url('/public/index.php?m=producto')],
+    ['label'=>'Clientes','value'=>$pdo->query("SELECT COUNT(*) c FROM CLIENTE")->fetch()['c'],'icon'=>'bi-people','href'=>url('/public/index.php?m=cliente')],
+    ['label'=>'Ventas','value'=>$pdo->query("SELECT COUNT(*) c FROM VENTAS")->fetch()['c'],'icon'=>'bi-receipt','href'=>url('/public/index.php?m=ventas')],
+    ['label'=>'Proveedores','value'=>$pdo->query("SELECT COUNT(*) c FROM PROVEEDOR")->fetch()['c'],'icon'=>'bi-truck','href'=>url('/public/index.php?m=proveedor')],
   ];
 
-  $lastSales = $pdo->query("SELECT v.VENTA_ID, v.FECHA, v.TOTAL, v.ESTADO, CONCAT(c.CODIGO,' - ',c.APELLIDO) AS CLIENTE
-                            FROM _CODE_VENTAS v
-                            JOIN _CODE_CLIENTE c ON c.CLIENTE_ID=v.CLIENTE_ID
+  $lastSales = $pdo->query("SELECT v.VENTA_ID, v.FECHA, v.TOTAL, v.ESTADO, CONCAT(c.NOMBRE,' ',c.APELLIDO) AS CLIENTE
+                            FROM VENTAS v
+                            JOIN CLIENTE c ON c.CLIENTE_ID=v.CLIENTE_ID
                             ORDER BY v.VENTA_ID DESC LIMIT 8")->fetchAll();
 
   include __DIR__ . '/../app/views/home.php';
