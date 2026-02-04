@@ -28,12 +28,12 @@ class ProductoController extends BaseController
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $this->model->create($this->getPayload());
-            $this->redirect('/productos');
+            $this->redirect('/?controller=producto');
         }
 
         $this->render('producto/form', [
             'title' => 'Nuevo producto',
-            'action' => '/productos/crear',
+            'action' => '/?controller=producto&action=create',
             'producto' => null,
             'categorias' => $this->categoriaModel->getAll(),
             'proveedores' => $this->proveedorModel->getAll(),
@@ -45,22 +45,22 @@ class ProductoController extends BaseController
     {
         $id = (int) ($_GET['id'] ?? 0);
         if ($id <= 0) {
-            $this->redirect('/productos');
+            $this->redirect('/?controller=producto');
         }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $this->model->update($id, $this->getPayload());
-            $this->redirect('/productos');
+            $this->redirect('/?controller=producto');
         }
 
         $producto = $this->model->getById($id);
         if (!$producto) {
-            $this->redirect('/productos');
+            $this->redirect('/?controller=producto');
         }
 
         $this->render('producto/form', [
             'title' => 'Editar producto',
-            'action' => '/productos/editar/' . $id,
+            'action' => '/?controller=producto&action=edit&id=' . $id,
             'producto' => $producto,
             'categorias' => $this->categoriaModel->getAll(),
             'proveedores' => $this->proveedorModel->getAll(),
@@ -74,7 +74,7 @@ class ProductoController extends BaseController
         if ($id > 0) {
             $this->model->delete($id);
         }
-        $this->redirect('/productos');
+        $this->redirect('/?controller=producto');
     }
 
     private function getPayload(): array

@@ -31,12 +31,12 @@ class VentasController extends BaseController
             $detalles = $this->getDetallePayload();
             $payload['TOTAL'] = $this->calcularTotal($detalles);
             $this->ventaModel->create($payload, $detalles);
-            $this->redirect('/ventas');
+            $this->redirect('/?controller=ventas');
         }
 
         $this->render('ventas/form', [
             'title' => 'Nueva venta',
-            'action' => '/ventas/crear',
+            'action' => '/?controller=ventas&action=create',
             'venta' => null,
             'detalles' => [],
             'clientes' => $this->clienteModel->getAll(),
@@ -49,7 +49,7 @@ class VentasController extends BaseController
     {
         $id = (int) ($_GET['id'] ?? 0);
         if ($id <= 0) {
-            $this->redirect('/ventas');
+            $this->redirect('/?controller=ventas');
         }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -57,17 +57,17 @@ class VentasController extends BaseController
             $detalles = $this->getDetallePayload();
             $payload['TOTAL'] = $this->calcularTotal($detalles);
             $this->ventaModel->update($id, $payload, $detalles);
-            $this->redirect('/ventas');
+            $this->redirect('/?controller=ventas');
         }
 
         $venta = $this->ventaModel->getById($id);
         if (!$venta) {
-            $this->redirect('/ventas');
+            $this->redirect('/?controller=ventas');
         }
 
         $this->render('ventas/form', [
             'title' => 'Editar venta',
-            'action' => '/ventas/editar/' . $id,
+            'action' => '/?controller=ventas&action=edit&id=' . $id,
             'venta' => $venta,
             'detalles' => $venta['DETALLE'] ?? [],
             'clientes' => $this->clienteModel->getAll(),
@@ -82,7 +82,7 @@ class VentasController extends BaseController
         if ($id > 0) {
             $this->ventaModel->delete($id);
         }
-        $this->redirect('/ventas');
+        $this->redirect('/?controller=ventas');
     }
 
     private function getVentaPayload(): array

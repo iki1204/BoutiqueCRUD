@@ -33,14 +33,14 @@
 <body>
     <header>
         <nav>
-            <a href="/dashboard">Dashboard</a>
-            <a href="/categorias">Categorías</a>
-            <a href="/clientes">Clientes</a>
-            <a href="/empleados">Empleados</a>
-            <a href="/proveedores">Proveedores</a>
-            <a href="/tallas">Tallas</a>
-            <a href="/productos">Productos</a>
-            <a href="/ventas">Ventas</a>
+            <a href="/?controller=dashboard">Dashboard</a>
+            <a href="/?controller=categoria">Categorías</a>
+            <a href="/?controller=cliente">Clientes</a>
+            <a href="/?controller=empleado">Empleados</a>
+            <a href="/?controller=proveedor">Proveedores</a>
+            <a href="/?controller=talla">Tallas</a>
+            <a href="/?controller=producto">Productos</a>
+            <a href="/?controller=ventas">Ventas</a>
         </nav>
     </header>
     <main>

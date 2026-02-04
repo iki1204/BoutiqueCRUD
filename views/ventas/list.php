@@ -1,6 +1,6 @@
 <h1>Ventas</h1>
 <div class="actions" style="margin-bottom: 16px;">
-    <a class="btn" href="/ventas/crear">Crear venta</a>
+    <a class="btn" href="/?controller=ventas&action=create">Crear venta</a>
 </div>
 <table>
     <thead>
@@ -27,8 +27,8 @@
                 <td><?= htmlspecialchars((string) $venta['METODO_PAGO']) ?></td>
                 <td>
                     <div class="actions">
-                        <a class="btn secondary" href="/ventas/editar/<?= (int) $venta['VENTA_ID'] ?>">Editar</a>
-                        <form class="inline" method="post" action="/ventas/eliminar">
+                        <a class="btn secondary" href="/?controller=ventas&action=edit&id=<?= (int) $venta['VENTA_ID'] ?>">Editar</a>
+                        <form class="inline" method="post" action="/?controller=ventas&action=delete">
                             <input type="hidden" name="id" value="<?= (int) $venta['VENTA_ID'] ?>">
                             <button class="btn danger" type="submit">Eliminar</button>
                         </form>

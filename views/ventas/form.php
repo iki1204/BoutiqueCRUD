@@ -97,7 +97,7 @@
 
     <div class="actions" style="margin-top: 24px;">
         <button class="btn" type="submit">Guardar venta</button>
-        <a class="btn secondary" href="/ventas">Cancelar</a>
+        <a class="btn secondary" href="/?controller=ventas">Cancelar</a>
     </div>
 </form>
 

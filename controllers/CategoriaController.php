@@ -22,12 +22,12 @@ class CategoriaController extends BaseController
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $this->model->create($this->getPayload());
-            $this->redirect('/categorias');
+            $this->redirect('/?controller=categoria');
         }
 
         $this->render('categoria/form', [
             'title' => 'Nueva categoría',
-            'action' => '/categorias/crear',
+            'action' => '/?controller=categoria&action=create',
             'categoria' => null,
         ]);
     }
@@ -36,22 +36,22 @@ class CategoriaController extends BaseController
     {
         $id = (int) ($_GET['id'] ?? 0);
         if ($id <= 0) {
-            $this->redirect('/categorias');
+            $this->redirect('/?controller=categoria');
         }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $this->model->update($id, $this->getPayload());
-            $this->redirect('/categorias');
+            $this->redirect('/?controller=categoria');
         }
 
         $categoria = $this->model->getById($id);
         if (!$categoria) {
-            $this->redirect('/categorias');
+            $this->redirect('/?controller=categoria');
         }
 
         $this->render('categoria/form', [
             'title' => 'Editar categoría',
-            'action' => '/categorias/editar/' . $id,
+            'action' => '/?controller=categoria&action=edit&id=' . $id,
             'categoria' => $categoria,
         ]);
     }
@@ -62,7 +62,7 @@ class CategoriaController extends BaseController
         if ($id > 0) {
             $this->model->delete($id);
         }
-        $this->redirect('/categorias');
+        $this->redirect('/?controller=categoria');
     }
 
     private function getPayload(): array

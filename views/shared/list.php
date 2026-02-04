@@ -1,6 +1,6 @@
 <h1><?= htmlspecialchars($title) ?></h1>
 <div class="actions" style="margin-bottom: 16px;">
-    <a class="btn" href="<?= htmlspecialchars($baseRoute) ?>/crear">Crear</a>
+    <a class="btn" href="<?= htmlspecialchars($baseRoute) ?>&action=create">Crear</a>
 </div>
 <table>
     <thead>
@@ -19,8 +19,8 @@
                 <?php endforeach; ?>
                 <td>
                     <div class="actions">
-                        <a class="btn secondary" href="<?= htmlspecialchars($baseRoute) ?>/editar/<?= (int) $item[$fields[0]] ?>">Editar</a>
-                        <form class="inline" method="post" action="<?= htmlspecialchars($baseRoute) ?>/eliminar">
+                        <a class="btn secondary" href="<?= htmlspecialchars($baseRoute) ?>&action=edit&id=<?= (int) $item[$fields[0]] ?>">Editar</a>
+                        <form class="inline" method="post" action="<?= htmlspecialchars($baseRoute) ?>&action=delete">
                             <input type="hidden" name="id" value="<?= (int) $item[$fields[0]] ?>">
                             <button class="btn danger" type="submit">Eliminar</button>
                         </form>

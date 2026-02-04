@@ -1,6 +1,6 @@
 <h1>Productos</h1>
 <div class="actions" style="margin-bottom: 16px;">
-    <a class="btn" href="/productos/crear">Crear producto</a>
+    <a class="btn" href="/?controller=producto&action=create">Crear producto</a>
 </div>
 <table>
     <thead>
@@ -33,8 +33,8 @@
                 <td><?= htmlspecialchars((string) $producto['PRECIO']) ?></td>
                 <td>
                     <div class="actions">
-                        <a class="btn secondary" href="/productos/editar/<?= (int) $producto['PRODUCTO_ID'] ?>">Editar</a>
-                        <form class="inline" method="post" action="/productos/eliminar">
+                        <a class="btn secondary" href="/?controller=producto&action=edit&id=<?= (int) $producto['PRODUCTO_ID'] ?>">Editar</a>
+                        <form class="inline" method="post" action="/?controller=producto&action=delete">
                             <input type="hidden" name="id" value="<?= (int) $producto['PRODUCTO_ID'] ?>">
                             <button class="btn danger" type="submit">Eliminar</button>
                         </form>

@@ -22,12 +22,12 @@ class ProveedorController extends BaseController
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $this->model->create($this->getPayload());
-            $this->redirect('/proveedores');
+            $this->redirect('/?controller=proveedor');
         }
 
         $this->render('proveedor/form', [
             'title' => 'Nuevo proveedor',
-            'action' => '/proveedores/crear',
+            'action' => '/?controller=proveedor&action=create',
             'proveedor' => null,
         ]);
     }
@@ -36,22 +36,22 @@ class ProveedorController extends BaseController
     {
         $id = (int) ($_GET['id'] ?? 0);
         if ($id <= 0) {
-            $this->redirect('/proveedores');
+            $this->redirect('/?controller=proveedor');
         }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $this->model->update($id, $this->getPayload());
-            $this->redirect('/proveedores');
+            $this->redirect('/?controller=proveedor');
         }
 
         $proveedor = $this->model->getById($id);
         if (!$proveedor) {
-            $this->redirect('/proveedores');
+            $this->redirect('/?controller=proveedor');
         }
 
         $this->render('proveedor/form', [
             'title' => 'Editar proveedor',
-            'action' => '/proveedores/editar/' . $id,
+            'action' => '/?controller=proveedor&action=edit&id=' . $id,
             'proveedor' => $proveedor,
         ]);
     }
@@ -62,7 +62,7 @@ class ProveedorController extends BaseController
         if ($id > 0) {
             $this->model->delete($id);
         }
-        $this->redirect('/proveedores');
+        $this->redirect('/?controller=proveedor');
     }
 
     private function getPayload(): array

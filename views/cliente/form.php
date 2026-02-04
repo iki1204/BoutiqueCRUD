@@ -28,6 +28,6 @@
     </div>
     <div class="actions" style="margin-top: 16px;">
         <button class="btn" type="submit">Guardar</button>
-        <a class="btn secondary" href="/clientes">Cancelar</a>
+        <a class="btn secondary" href="/?controller=cliente">Cancelar</a>
     </div>
 </form>

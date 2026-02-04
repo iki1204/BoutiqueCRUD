@@ -22,12 +22,12 @@ class TallaController extends BaseController
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $this->model->create($this->getPayload());
-            $this->redirect('/tallas');
+            $this->redirect('/?controller=talla');
         }
 
         $this->render('talla/form', [
             'title' => 'Nueva talla',
-            'action' => '/tallas/crear',
+            'action' => '/?controller=talla&action=create',
             'talla' => null,
         ]);
     }
@@ -36,22 +36,22 @@ class TallaController extends BaseController
     {
         $id = (int) ($_GET['id'] ?? 0);
         if ($id <= 0) {
-            $this->redirect('/tallas');
+            $this->redirect('/?controller=talla');
         }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $this->model->update($id, $this->getPayload());
-            $this->redirect('/tallas');
+            $this->redirect('/?controller=talla');
         }
 
         $talla = $this->model->getById($id);
         if (!$talla) {
-            $this->redirect('/tallas');
+            $this->redirect('/?controller=talla');
         }
 
         $this->render('talla/form', [
             'title' => 'Editar talla',
-            'action' => '/tallas/editar/' . $id,
+            'action' => '/?controller=talla&action=edit&id=' . $id,
             'talla' => $talla,
         ]);
     }
@@ -62,7 +62,7 @@ class TallaController extends BaseController
         if ($id > 0) {
             $this->model->delete($id);
         }
-        $this->redirect('/tallas');
+        $this->redirect('/?controller=talla');
     }
 
     private function getPayload(): array

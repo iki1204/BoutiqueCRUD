@@ -9,11 +9,11 @@
 
 <h2 class="section-title">Rutas principales</h2>
 <ul>
-    <li><a href="/categorias">/categorias</a> - Gestión de categorías.</li>
-    <li><a href="/clientes">/clientes</a> - Gestión de clientes.</li>
-    <li><a href="/empleados">/empleados</a> - Gestión de empleados.</li>
-    <li><a href="/proveedores">/proveedores</a> - Gestión de proveedores.</li>
-    <li><a href="/tallas">/tallas</a> - Gestión de tallas.</li>
-    <li><a href="/productos">/productos</a> - Gestión de productos.</li>
-    <li><a href="/ventas">/ventas</a> - Ventas y detalles.</li>
+    <li><a href="/?controller=categoria">Categorías</a> - Gestión de categorías.</li>
+    <li><a href="/?controller=cliente">Clientes</a> - Gestión de clientes.</li>
+    <li><a href="/?controller=empleado">Empleados</a> - Gestión de empleados.</li>
+    <li><a href="/?controller=proveedor">Proveedores</a> - Gestión de proveedores.</li>
+    <li><a href="/?controller=talla">Tallas</a> - Gestión de tallas.</li>
+    <li><a href="/?controller=producto">Productos</a> - Gestión de productos.</li>
+    <li><a href="/?controller=ventas">Ventas</a> - Ventas y detalles.</li>
 </ul>

@@ -22,12 +22,12 @@ class EmpleadoController extends BaseController
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $this->model->create($this->getPayload());
-            $this->redirect('/empleados');
+            $this->redirect('/?controller=empleado');
         }
 
         $this->render('empleado/form', [
             'title' => 'Nuevo empleado',
-            'action' => '/empleados/crear',
+            'action' => '/?controller=empleado&action=create',
             'empleado' => null,
         ]);
     }
@@ -36,22 +36,22 @@ class EmpleadoController extends BaseController
     {
         $id = (int) ($_GET['id'] ?? 0);
         if ($id <= 0) {
-            $this->redirect('/empleados');
+            $this->redirect('/?controller=empleado');
         }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $this->model->update($id, $this->getPayload());
-            $this->redirect('/empleados');
+            $this->redirect('/?controller=empleado');
         }
 
         $empleado = $this->model->getById($id);
         if (!$empleado) {
-            $this->redirect('/empleados');
+            $this->redirect('/?controller=empleado');
         }
 
         $this->render('empleado/form', [
             'title' => 'Editar empleado',
-            'action' => '/empleados/editar/' . $id,
+            'action' => '/?controller=empleado&action=edit&id=' . $id,
             'empleado' => $empleado,
         ]);
     }
@@ -62,7 +62,7 @@ class EmpleadoController extends BaseController
         if ($id > 0) {
             $this->model->delete($id);
         }
-        $this->redirect('/empleados');
+        $this->redirect('/?controller=empleado');
     }
 
     private function getPayload(): array

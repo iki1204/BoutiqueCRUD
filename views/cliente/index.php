@@ -1,6 +1,6 @@
 <h1>Clientes</h1>
 <div class="actions" style="margin-bottom: 16px;">
-    <a class="btn" href="/clientes/crear">Crear cliente</a>
+    <a class="btn" href="/?controller=cliente&action=create">Crear cliente</a>
 </div>
 <table>
     <thead>
@@ -25,8 +25,8 @@
                 <td><?= htmlspecialchars((string) $cliente['DIRECCION']) ?></td>
                 <td>
                     <div class="actions">
-                        <a class="btn secondary" href="/clientes/editar/<?= (int) $cliente['CLIENTE_ID'] ?>">Editar</a>
-                        <form class="inline" method="post" action="/clientes/eliminar">
+                        <a class="btn secondary" href="/?controller=cliente&action=edit&id=<?= (int) $cliente['CLIENTE_ID'] ?>">Editar</a>
+                        <form class="inline" method="post" action="/?controller=cliente&action=delete">
                             <input type="hidden" name="id" value="<?= (int) $cliente['CLIENTE_ID'] ?>">
                             <button class="btn danger" type="submit">Eliminar</button>
                         </form>

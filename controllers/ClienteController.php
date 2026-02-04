@@ -22,12 +22,12 @@ class ClienteController extends BaseController
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $this->model->create($this->getPayload());
-            $this->redirect('/clientes');
+            $this->redirect('/?controller=cliente');
         }
 
         $this->render('cliente/form', [
             'title' => 'Nuevo cliente',
-            'action' => '/clientes/crear',
+            'action' => '/?controller=cliente&action=create',
             'cliente' => null,
         ]);
     }
@@ -36,22 +36,22 @@ class ClienteController extends BaseController
     {
         $id = (int) ($_GET['id'] ?? 0);
         if ($id <= 0) {
-            $this->redirect('/clientes');
+            $this->redirect('/?controller=cliente');
         }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $this->model->update($id, $this->getPayload());
-            $this->redirect('/clientes');
+            $this->redirect('/?controller=cliente');
         }
 
         $cliente = $this->model->getById($id);
         if (!$cliente) {
-            $this->redirect('/clientes');
+            $this->redirect('/?controller=cliente');
         }
 
         $this->render('cliente/form', [
             'title' => 'Editar cliente',
-            'action' => '/clientes/editar/' . $id,
+            'action' => '/?controller=cliente&action=edit&id=' . $id,
             'cliente' => $cliente,
         ]);
     }
@@ -62,7 +62,7 @@ class ClienteController extends BaseController
         if ($id > 0) {
             $this->model->delete($id);
         }
-        $this->redirect('/clientes');
+        $this->redirect('/?controller=cliente');
     }
 
     private function getPayload(): array

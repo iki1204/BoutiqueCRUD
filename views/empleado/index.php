@@ -1,6 +1,6 @@
 <h1>Empleados</h1>
 <div class="actions" style="margin-bottom: 16px;">
-    <a class="btn" href="/empleados/crear">Crear empleado</a>
+    <a class="btn" href="/?controller=empleado&action=create">Crear empleado</a>
 </div>
 <table>
     <thead>
@@ -27,8 +27,8 @@
                 <td><?= htmlspecialchars((string) $empleado['FECHA_INGRESO']) ?></td>
                 <td>
                     <div class="actions">
-                        <a class="btn secondary" href="/empleados/editar/<?= (int) $empleado['EMPLEADO_ID'] ?>">Editar</a>
-                        <form class="inline" method="post" action="/empleados/eliminar">
+                        <a class="btn secondary" href="/?controller=empleado&action=edit&id=<?= (int) $empleado['EMPLEADO_ID'] ?>">Editar</a>
+                        <form class="inline" method="post" action="/?controller=empleado&action=delete">
                             <input type="hidden" name="id" value="<?= (int) $empleado['EMPLEADO_ID'] ?>">
                             <button class="btn danger" type="submit">Eliminar</button>
                         </form>

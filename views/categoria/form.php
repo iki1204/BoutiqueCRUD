@@ -16,6 +16,6 @@
     </div>
     <div class="actions" style="margin-top: 16px;">
         <button class="btn" type="submit">Guardar</button>
-        <a class="btn secondary" href="/categorias">Cancelar</a>
+        <a class="btn secondary" href="/?controller=categoria">Cancelar</a>
     </div>
 </form>
