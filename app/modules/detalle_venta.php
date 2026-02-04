@@ -1,0 +1,54 @@
+<?php
+require_once __DIR__ . '/../db.php';
+require_once __DIR__ . '/../helpers.php';
+
+$title = "Detalle de Venta";
+$action = $_GET['a'] ?? 'list';
+$id = $_GET['id'] ?? null;
+$venta_id = $_GET['venta_id'] ?? null;
+
+csrf_check();
+
+if ($action === 'delete' && $id) {
+  $pdo->beginTransaction();
+  try {
+    $row = $pdo->prepare("SELECT * FROM _CODE_DETALLE_VENTA WHERE DETALLE_ID=?");
+    $row->execute([$id]);
+    $d = $row->fetch();
+    if ($d) {
+      // restore stock and subtract total
+      $pdo->prepare("UPDATE _CODE_PRODUCTO SET STOCK = STOCK + ? WHERE PRODUCTO_ID=?")->execute([$d['CANTIDAD'], $d['PRODUCTO_ID']]);
+      $pdo->prepare("UPDATE _CODE_VENTAS SET TOTAL = TOTAL - (? * ?) WHERE VENTA_ID=?")->execute([$d['CANTIDAD'], $d['PRECIO'], $d['VENTA_ID']]);
+      $pdo->prepare("DELETE FROM _CODE_DETALLE_VENTA WHERE DETALLE_ID=?")->execute([$id]);
+    }
+    $pdo->commit();
+    flash_set('success','Detalle eliminado (y totales ajustados).');
+  } catch (Throwable $e) {
+    $pdo->rollBack();
+    flash_set('danger','Error: '.$e->getMessage());
+  }
+  redirect(url("/public/index.php?m=detalle_venta" . ($venta_id ? "&venta_id=$venta_id" : "")));
+}
+
+$list = [];
+$params = [];
+$where = "";
+
+if ($venta_id) {
+  $where = "WHERE d.VENTA_ID = ?";
+  $params[] = $venta_id;
+}
+
+$sql = "SELECT d.*, 
+          CONCAT(p.CODIGO,' - ',p.DESCRIPCION) AS PRODUCTO,
+          v.FECHA AS FECHA_VENTA
+        FROM _CODE_DETALLE_VENTA d
+        JOIN _CODE_PRODUCTO p ON p.PRODUCTO_ID=d.PRODUCTO_ID
+        JOIN _CODE_VENTAS v ON v.VENTA_ID=d.VENTA_ID
+        $where
+        ORDER BY d.DETALLE_ID DESC";
+$stmt = $pdo->prepare($sql);
+$stmt->execute($params);
+$list = $stmt->fetchAll();
+
+include __DIR__ . '/../views/detalle_venta.php';
