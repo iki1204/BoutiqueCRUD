@@ -2,11 +2,8 @@
 <p class="notice">Accede rápidamente a cada módulo y revisa los conteos actuales.</p>
 <div class="card-grid">
     <?php foreach ($cards as $card) : ?>
-        <div class="card">
-            <h3><?= htmlspecialchars($card['label']) ?></h3>
-            <p><strong><?= (int) $card['count'] ?></strong> registros</p>
-            <a class="btn" href="<?= htmlspecialchars($card['route']) ?>">Ir a módulo</a>
-        </div>
+        <?php $cardData = $card; ?>
+        <?php require __DIR__ . '/' . $card['view'] . '.php'; ?>
     <?php endforeach; ?>
 </div>
 

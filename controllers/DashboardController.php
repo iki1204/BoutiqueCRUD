@@ -6,25 +6,50 @@ class DashboardController extends BaseController
 {
     public function index(): void
     {
-        $tables = [
-            'Categorías' => ['_CODE_CATEGORIA', 'CATEGORIA_ID', '/categorias'],
-            'Clientes' => ['_CODE_CLIENTE', 'CLIENTE_ID', '/clientes'],
-            'Empleados' => ['_CODE_EMPLEADO', 'EMPLEADO_ID', '/empleados'],
-            'Proveedores' => ['_CODE_PROVEEDOR', 'PROVEEDOR_ID', '/proveedores'],
-            'Tallas' => ['_CODE_TALLA', 'TALLA_ID', '/tallas'],
-            'Productos' => ['_CODE_PRODUCTO', 'PRODUCTO_ID', '/productos'],
-            'Ventas' => ['_CODE_VENTAS', 'VENTA_ID', '/ventas'],
+        $cards = [
+            [
+                'view' => 'cards/categorias',
+                'label' => 'Categorías',
+                'count' => (new CategoriaModel())->count(),
+                'route' => '/categorias',
+            ],
+            [
+                'view' => 'cards/clientes',
+                'label' => 'Clientes',
+                'count' => (new ClienteModel())->count(),
+                'route' => '/clientes',
+            ],
+            [
+                'view' => 'cards/empleados',
+                'label' => 'Empleados',
+                'count' => (new EmpleadoModel())->count(),
+                'route' => '/empleados',
+            ],
+            [
+                'view' => 'cards/proveedores',
+                'label' => 'Proveedores',
+                'count' => (new ProveedorModel())->count(),
+                'route' => '/proveedores',
+            ],
+            [
+                'view' => 'cards/tallas',
+                'label' => 'Tallas',
+                'count' => (new TallaModel())->count(),
+                'route' => '/tallas',
+            ],
+            [
+                'view' => 'cards/productos',
+                'label' => 'Productos',
+                'count' => (new ProductoModel())->count(),
+                'route' => '/productos',
+            ],
+            [
+                'view' => 'cards/ventas',
+                'label' => 'Ventas',
+                'count' => (new VentaModel())->count(),
+                'route' => '/ventas',
+            ],
         ];
-
-        $cards = [];
-        foreach ($tables as $label => [$table, $pk, $route]) {
-            $model = new GenericModel($table, $pk, [$pk]);
-            $cards[] = [
-                'label' => $label,
-                'count' => $model->count(),
-                'route' => $route,
-            ];
-        }
 
         $this->render('dashboard/index', [
             'cards' => $cards,

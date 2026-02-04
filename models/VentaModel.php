@@ -50,6 +50,12 @@ class VentaModel
         return $venta;
     }
 
+    public function count(): int
+    {
+        $stmt = $this->db->query('SELECT COUNT(*) FROM _CODE_VENTAS');
+        return (int) $stmt->fetchColumn();
+    }
+
     public function create(array $ventaData, array $detalles): int
     {
         $this->db->beginTransaction();

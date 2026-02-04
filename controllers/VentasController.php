@@ -5,23 +5,22 @@ declare(strict_types=1);
 class VentasController extends BaseController
 {
     private VentaModel $ventaModel;
-    private GenericModel $clienteModel;
-    private GenericModel $empleadoModel;
-    private GenericModel $productoModel;
+    private ClienteModel $clienteModel;
+    private EmpleadoModel $empleadoModel;
+    private ProductoModel $productoModel;
 
     public function __construct()
     {
         $this->ventaModel = new VentaModel();
-        $this->clienteModel = new GenericModel('_CODE_CLIENTE', 'CLIENTE_ID', ['CLIENTE_ID']);
-        $this->empleadoModel = new GenericModel('_CODE_EMPLEADO', 'EMPLEADO_ID', ['EMPLEADO_ID']);
-        $this->productoModel = new GenericModel('_CODE_PRODUCTO', 'PRODUCTO_ID', ['PRODUCTO_ID']);
+        $this->clienteModel = new ClienteModel();
+        $this->empleadoModel = new EmpleadoModel();
+        $this->productoModel = new ProductoModel();
     }
 
     public function index(): void
     {
-        $ventas = $this->ventaModel->getAll();
-        $this->render('ventas/list', [
-            'ventas' => $ventas,
+        $this->render('ventas/index', [
+            'ventas' => $this->ventaModel->getAll(),
         ]);
     }
 
@@ -36,12 +35,13 @@ class VentasController extends BaseController
         }
 
         $this->render('ventas/form', [
+            'title' => 'Nueva venta',
+            'action' => '/ventas/crear',
             'venta' => null,
             'detalles' => [],
             'clientes' => $this->clienteModel->getAll(),
             'empleados' => $this->empleadoModel->getAll(),
             'productos' => $this->productoModel->getAll(),
-            'action' => '/ventas/crear',
         ]);
     }
 
@@ -49,7 +49,7 @@ class VentasController extends BaseController
     {
         $id = (int) ($_GET['id'] ?? 0);
         if ($id <= 0) {
-            $this->redirect('/?controller=ventas');
+            $this->redirect('/ventas');
         }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -66,12 +66,13 @@ class VentasController extends BaseController
         }
 
         $this->render('ventas/form', [
+            'title' => 'Editar venta',
+            'action' => '/ventas/editar/' . $id,
             'venta' => $venta,
             'detalles' => $venta['DETALLE'] ?? [],
             'clientes' => $this->clienteModel->getAll(),
             'empleados' => $this->empleadoModel->getAll(),
             'productos' => $this->productoModel->getAll(),
-            'action' => '/ventas/editar/' . $id,
         ]);
     }
 

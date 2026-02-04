@@ -1,4 +1,4 @@
-<h1><?= $venta ? 'Editar venta' : 'Nueva venta' ?></h1>
+<h1><?= htmlspecialchars($title) ?></h1>
 <form method="post" action="<?= htmlspecialchars($action) ?>">
     <div class="form-grid">
         <div>
@@ -25,7 +25,7 @@
         </div>
         <div>
             <label for="FECHA">Fecha</label>
-            <input type="datetime-local" id="FECHA" name="FECHA" value="<?= htmlspecialchars($venta ? date('Y-m-d\TH:i', strtotime((string) $venta['FECHA'])) : date('Y-m-d\TH:i')) ?>">
+            <input type="datetime-local" id="FECHA" name="FECHA" value="<?= htmlspecialchars($venta ? date('Y-m-d\\TH:i', strtotime((string) $venta['FECHA'])) : date('Y-m-d\\TH:i')) ?>">
         </div>
         <div>
             <label for="ESTADO">Estado</label>

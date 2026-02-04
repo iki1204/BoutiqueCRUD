@@ -1,0 +1,21 @@
+<h1><?= htmlspecialchars($title) ?></h1>
+<form method="post" action="<?= htmlspecialchars($action) ?>">
+    <div class="form-grid">
+        <div>
+            <label for="CATEGORIA_ID">ID</label>
+            <input type="number" id="CATEGORIA_ID" name="CATEGORIA_ID" value="<?= htmlspecialchars((string) ($categoria['CATEGORIA_ID'] ?? '')) ?>" required>
+        </div>
+        <div>
+            <label for="CODIGO">Código</label>
+            <input type="text" id="CODIGO" name="CODIGO" value="<?= htmlspecialchars((string) ($categoria['CODIGO'] ?? '')) ?>" required>
+        </div>
+        <div>
+            <label for="DESCRIPCION">Descripción</label>
+            <input type="text" id="DESCRIPCION" name="DESCRIPCION" value="<?= htmlspecialchars((string) ($categoria['DESCRIPCION'] ?? '')) ?>" required>
+        </div>
+    </div>
+    <div class="actions" style="margin-top: 16px;">
+        <button class="btn" type="submit">Guardar</button>
+        <a class="btn secondary" href="/categorias">Cancelar</a>
+    </div>
+</form>
