@@ -12,8 +12,11 @@ ob_start();
 </div>
 
 <div class="card shadow-sm">
+  <div class="p-3 border-bottom">
+    <input class="form-control form-control-sm" type="search" placeholder="Buscar en la tabla..." data-table-search="#detalleVentaTable">
+  </div>
   <div class="table-responsive">
-    <table class="table table-hover align-middle mb-0">
+    <table class="table table-hover align-middle mb-0" id="detalleVentaTable">
       <thead class="table-light">
         <tr>
           <th>ID</th>

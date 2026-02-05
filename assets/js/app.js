@@ -95,3 +95,26 @@
   // Start with 1 row
   addRow();
 })();
+
+(function(){
+  const inputs = document.querySelectorAll('[data-table-search]');
+  if(!inputs.length) return;
+
+  inputs.forEach(input=>{
+    const selector = input.getAttribute('data-table-search');
+    if(!selector) return;
+
+    const table = document.querySelector(selector);
+    const tbody = table?.tBodies?.[0];
+    if(!tbody) return;
+
+    const rows = Array.from(tbody.rows);
+    input.addEventListener('input', ()=>{
+      const query = input.value.trim().toLowerCase();
+      rows.forEach(row=>{
+        const text = row.textContent.toLowerCase();
+        row.style.display = !query || text.includes(query) ? '' : 'none';
+      });
+    });
+  });
+})();

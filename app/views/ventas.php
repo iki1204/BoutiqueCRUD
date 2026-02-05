@@ -11,8 +11,11 @@ ob_start();
   </div>
 
   <div class="card shadow-sm">
+    <div class="p-3 border-bottom">
+      <input class="form-control form-control-sm" type="search" placeholder="Buscar en la tabla..." data-table-search="#ventasTable">
+    </div>
     <div class="table-responsive">
-      <table class="table table-hover align-middle mb-0">
+      <table class="table table-hover align-middle mb-0" id="ventasTable">
         <thead class="table-light">
           <tr>
             <th>ID</th>
@@ -167,8 +170,11 @@ ob_start();
     <div class="col-12 col-lg-8">
       <div class="card shadow-sm">
         <div class="card-header bg-white"><strong>Productos</strong></div>
+        <div class="p-3 border-bottom">
+          <input class="form-control form-control-sm" type="search" placeholder="Buscar en la tabla..." data-table-search="#ventaProductosTable">
+        </div>
         <div class="table-responsive">
-          <table class="table table-hover align-middle mb-0">
+          <table class="table table-hover align-middle mb-0" id="ventaProductosTable">
             <thead class="table-light">
               <tr>
                 <th>Producto</th>

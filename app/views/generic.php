@@ -11,8 +11,11 @@ ob_start();
 
 <?php if ($action === 'list'): ?>
   <div class="card shadow-sm">
+    <div class="p-3 border-bottom">
+      <input class="form-control form-control-sm" type="search" placeholder="Buscar en la tabla..." data-table-search="#genericTable">
+    </div>
     <div class="table-responsive">
-      <table class="table table-hover align-middle mb-0">
+      <table class="table table-hover align-middle mb-0" id="genericTable">
         <thead class="table-light">
           <tr>
             <?php foreach ($cols as $name => $def): ?>
