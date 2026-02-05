@@ -46,11 +46,12 @@ if ($venta_id) {
   $params[] = $venta_id;
 }
 
-$sql = "SELECT d.*, 
-          CONCAT(p.CODIGO,' - ',p.DESCRIPCION) AS PRODUCTO,
+$sql = "SELECT d.*,
+          CONCAT(p.CODIGO,' - ',p.DESCRIPCION,' (Talla: ',t.DESCRIPCION,')') AS PRODUCTO,
           v.FECHA AS FECHA_VENTA
         FROM DETALLE_VENTA d
         JOIN PRODUCTO p ON p.PRODUCTO_ID=d.PRODUCTO_ID
+        JOIN TALLA t ON t.TALLA_ID=p.TALLA_ID
         JOIN VENTAS v ON v.VENTA_ID=d.VENTA_ID
         $where
         ORDER BY d.DETALLE_ID DESC";

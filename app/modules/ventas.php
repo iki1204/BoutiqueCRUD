@@ -26,7 +26,13 @@ function employees(PDO $pdo): array {
   return $pdo->query("SELECT EMPLEADO_ID AS id, CONCAT(NOMBRE,' ',APELLIDO) AS label FROM EMPLEADO ORDER BY APELLIDO")->fetchAll();
 }
 function products(PDO $pdo): array {
-  return $pdo->query("SELECT PRODUCTO_ID AS id, CONCAT(CODIGO,' - ',DESCRIPCION,' (Stock: ',STOCK,')') AS label, PRECIO AS precio, STOCK AS stock FROM PRODUCTO ORDER BY DESCRIPCION")->fetchAll();
+  return $pdo->query("SELECT p.PRODUCTO_ID AS id,
+                             CONCAT(p.CODIGO,' - ',p.DESCRIPCION,' (Talla: ',t.DESCRIPCION,', Stock: ',p.STOCK,')') AS label,
+                             p.PRECIO AS precio,
+                             p.STOCK AS stock
+                      FROM PRODUCTO p
+                      JOIN TALLA t ON t.TALLA_ID = p.TALLA_ID
+                      ORDER BY p.DESCRIPCION")->fetchAll();
 }
 
 if ($action === 'delete' && $id) {
