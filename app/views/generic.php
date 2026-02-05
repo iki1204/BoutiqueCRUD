@@ -1,12 +1,15 @@
 <?php
 $page_title = $title;
+$canWrite = auth_can_write($module);
 ob_start();
 ?>
 <div class="d-flex align-items-center justify-content-between mb-3">
   <div class="text-muted small">Lista de <code><?= h($title) ?></code></div>
-  <a class="btn btn-primary" href="<?= url('/public/index.php?m=' . h($module) . '&a=create') ?>">
-    <i class="bi bi-plus-lg me-1"></i>Nuevo
-  </a>
+  <?php if ($canWrite): ?>
+    <a class="btn btn-primary" href="<?= url('/public/index.php?m=' . h($module) . '&a=create') ?>">
+      <i class="bi bi-plus-lg me-1"></i>Nuevo
+    </a>
+  <?php endif; ?>
 </div>
 
 <?php if ($action === 'list'): ?>
@@ -18,7 +21,9 @@ ob_start();
             <?php foreach ($cols as $name => $def): ?>
               <th><?= h($def['label'] ?? $name) ?></th>
             <?php endforeach; ?>
-            <th class="text-end">Acciones</th>
+            <?php if ($canWrite): ?>
+              <th class="text-end">Acciones</th>
+            <?php endif; ?>
           </tr>
         </thead>
         <tbody>
@@ -33,17 +38,19 @@ ob_start();
                   <?php endif; ?>
                 </td>
               <?php endforeach; ?>
-              <td class="text-end">
-                <a class="btn btn-sm btn-outline-secondary" href="<?= url('/public/index.php?m=' . h($module) . '&a=edit&id=' . h($row[$pk])) ?>">Editar</a>
-                <form class="d-inline" method="post" action="<?= url('/public/index.php?m=' . h($module) . '&a=delete&id=' . h($row[$pk])) ?>" onsubmit="return confirm('¿Eliminar este registro?');">
-                  <input type="hidden" name="_csrf" value="<?= h(csrf_token()) ?>">
-                  <button class="btn btn-sm btn-outline-danger" type="submit">Eliminar</button>
-                </form>
-              </td>
+              <?php if ($canWrite): ?>
+                <td class="text-end">
+                  <a class="btn btn-sm btn-outline-secondary" href="<?= url('/public/index.php?m=' . h($module) . '&a=edit&id=' . h($row[$pk])) ?>">Editar</a>
+                  <form class="d-inline" method="post" action="<?= url('/public/index.php?m=' . h($module) . '&a=delete&id=' . h($row[$pk])) ?>" onsubmit="return confirm('¿Eliminar este registro?');">
+                    <input type="hidden" name="_csrf" value="<?= h(csrf_token()) ?>">
+                    <button class="btn btn-sm btn-outline-danger" type="submit">Eliminar</button>
+                  </form>
+                </td>
+              <?php endif; ?>
             </tr>
           <?php endforeach; ?>
           <?php if (count($list)===0): ?>
-            <tr><td colspan="<?= count($cols)+1 ?>" class="text-center text-muted py-4">No hay registros.</td></tr>
+            <tr><td colspan="<?= count($cols)+($canWrite ? 1 : 0) ?>" class="text-center text-muted py-4">No hay registros.</td></tr>
           <?php endif; ?>
         </tbody>
       </table>
@@ -51,7 +58,7 @@ ob_start();
   </div>
 <?php endif; ?>
 
-<?php if ($action === 'create' || $action === 'edit'): ?>
+<?php if (($action === 'create' || $action === 'edit') && $canWrite): ?>
   <?php
     $isEdit = ($action==='edit');
     $formAction = url('/public/index.php?m=' . h($module) . '&a=' . h($action) . ($isEdit ? '&id=' . h($id) : ''));

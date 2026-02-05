@@ -5,8 +5,19 @@ require_once __DIR__ . '/../helpers.php';
 $title = "Ventas";
 $action = $_GET['a'] ?? 'list';
 $id = $_GET['id'] ?? null;
+$canWrite = auth_can_write('ventas');
 
 csrf_check();
+
+if (!$canWrite && in_array($action, ['create', 'edit', 'delete'], true)) {
+  if ($_SERVER['REQUEST_METHOD'] === 'POST' || $action === 'delete') {
+    http_response_code(403);
+    echo "No tienes permisos para modificar ventas.";
+    exit;
+  }
+  flash_set('warning', 'No tienes permisos para crear o editar ventas.');
+  redirect(url("/public/index.php?m=ventas"));
+}
 
 function clients(PDO $pdo): array {
   return $pdo->query("SELECT CLIENTE_ID AS id, CONCAT(NOMBRE,' ',APELLIDO) AS label FROM CLIENTE ORDER BY APELLIDO")->fetchAll();

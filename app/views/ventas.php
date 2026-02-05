@@ -1,13 +1,16 @@
 <?php
 $page_title = $title;
+$canWrite = auth_can_write('ventas');
 ob_start();
 ?>
 <?php if ($action === 'list'): ?>
   <div class="d-flex align-items-center justify-content-between mb-3">
     <div class="text-muted small">Crea ventas con múltiples productos y el sistema actualiza stock y total.</div>
-    <a class="btn btn-primary" href="<?= url('/public/index.php?m=ventas&a=create') ?>">
-      <i class="bi bi-plus-lg me-1"></i>Nueva venta
-    </a>
+    <?php if ($canWrite): ?>
+      <a class="btn btn-primary" href="<?= url('/public/index.php?m=ventas&a=create') ?>">
+        <i class="bi bi-plus-lg me-1"></i>Nueva venta
+      </a>
+    <?php endif; ?>
   </div>
 
   <div class="card shadow-sm">
@@ -37,11 +40,13 @@ ob_start();
               <td><?= h($v['METODO_PAGO'] ?: '—') ?></td>
               <td class="text-end">
                 <a class="btn btn-sm btn-outline-primary" href="<?= url('/public/index.php?m=ventas&a=view&id=' . $v['VENTA_ID']) ?>">Ver</a>
-                <a class="btn btn-sm btn-outline-secondary" href="<?= url('/public/index.php?m=ventas&a=edit&id=' . $v['VENTA_ID']) ?>">Editar</a>
-                <form class="d-inline" method="post" action="<?= url('/public/index.php?m=ventas&a=delete&id=' . $v['VENTA_ID']) ?>" onsubmit="return confirm('¿Eliminar la venta? Se restaurará stock.');">
-                  <input type="hidden" name="_csrf" value="<?= h(csrf_token()) ?>">
-                  <button class="btn btn-sm btn-outline-danger" type="submit">Eliminar</button>
-                </form>
+                <?php if ($canWrite): ?>
+                  <a class="btn btn-sm btn-outline-secondary" href="<?= url('/public/index.php?m=ventas&a=edit&id=' . $v['VENTA_ID']) ?>">Editar</a>
+                  <form class="d-inline" method="post" action="<?= url('/public/index.php?m=ventas&a=delete&id=' . $v['VENTA_ID']) ?>" onsubmit="return confirm('¿Eliminar la venta? Se restaurará stock.');">
+                    <input type="hidden" name="_csrf" value="<?= h(csrf_token()) ?>">
+                    <button class="btn btn-sm btn-outline-danger" type="submit">Eliminar</button>
+                  </form>
+                <?php endif; ?>
               </td>
             </tr>
           <?php endforeach; ?>
@@ -146,7 +151,9 @@ ob_start();
     <div class="d-flex gap-2">
       <a class="btn btn-outline-secondary" href="<?= url('/public/index.php?m=ventas') ?>">Volver</a>
       <a class="btn btn-outline-primary" href="<?= url('/public/index.php?m=detalle_venta&venta_id=' . $venta['VENTA_ID']) ?>">Ver detalle</a>
-      <a class="btn btn-outline-secondary" href="<?= url('/public/index.php?m=ventas&a=edit&id=' . $venta['VENTA_ID']) ?>">Editar</a>
+      <?php if ($canWrite): ?>
+        <a class="btn btn-outline-secondary" href="<?= url('/public/index.php?m=ventas&a=edit&id=' . $venta['VENTA_ID']) ?>">Editar</a>
+      <?php endif; ?>
     </div>
   </div>
 
@@ -197,7 +204,7 @@ ob_start();
   </div>
 <?php endif; ?>
 
-<?php if ($action === 'edit' && $venta): ?>
+<?php if ($action === 'edit' && $venta && $canWrite): ?>
   <div class="card shadow-sm">
     <div class="card-body">
       <form method="post" action="<?= url('/public/index.php?m=ventas&a=edit&id=' . h($venta['VENTA_ID'])) ?>">

@@ -16,14 +16,17 @@ return [
       'admin' => [
         'label' => 'Administrador',
         'modules' => '*',
+        'write' => true,
       ],
       'developer' => [
         'label' => 'Desarrollador',
         'modules' => ['categoria', 'talla', 'producto'],
+        'write' => true,
       ],
       'supervisor' => [
         'label' => 'Supervisor',
         'modules' => ['cliente', 'ventas', 'detalle_venta', 'proveedor'],
+        'write' => false,
       ],
     ],
     'default_role' => 'admin',

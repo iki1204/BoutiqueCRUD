@@ -1,5 +1,6 @@
 <?php
 $page_title = $title;
+$canWrite = auth_can_write('detalle_venta');
 ob_start();
 ?>
 <div class="d-flex align-items-center justify-content-between mb-3">
@@ -23,7 +24,9 @@ ob_start();
           <th>Cantidad</th>
           <th>Precio</th>
           <th>Subtotal</th>
-          <th class="text-end">Acciones</th>
+          <?php if ($canWrite): ?>
+            <th class="text-end">Acciones</th>
+          <?php endif; ?>
         </tr>
       </thead>
       <tbody>
@@ -38,18 +41,20 @@ ob_start();
             <td><?= h($row['CANTIDAD']) ?></td>
             <td>$<?= h(number_format((float)$row['PRECIO'],2)) ?></td>
             <td>$<?= h(number_format((float)$row['CANTIDAD']*(float)$row['PRECIO'],2)) ?></td>
-            <td class="text-end">
-              <form class="d-inline" method="post"
-                action="<?= url('/public/index.php?m=detalle_venta&a=delete&id=' . h($row['DETALLE_ID']) . ($venta_id ? '&venta_id=' . h($venta_id) : '')) ?>"
-                onsubmit="return confirm('¿Eliminar esta línea? Se ajustará stock y total.');">
-                <input type="hidden" name="_csrf" value="<?= h(csrf_token()) ?>">
-                <button class="btn btn-sm btn-outline-danger" type="submit">Eliminar</button>
-              </form>
-            </td>
+            <?php if ($canWrite): ?>
+              <td class="text-end">
+                <form class="d-inline" method="post"
+                  action="<?= url('/public/index.php?m=detalle_venta&a=delete&id=' . h($row['DETALLE_ID']) . ($venta_id ? '&venta_id=' . h($venta_id) : '')) ?>"
+                  onsubmit="return confirm('¿Eliminar esta línea? Se ajustará stock y total.');">
+                  <input type="hidden" name="_csrf" value="<?= h(csrf_token()) ?>">
+                  <button class="btn btn-sm btn-outline-danger" type="submit">Eliminar</button>
+                </form>
+              </td>
+            <?php endif; ?>
           </tr>
         <?php endforeach; ?>
         <?php if (count($list)===0): ?>
-          <tr><td colspan="8" class="text-center text-muted py-4">No hay líneas.</td></tr>
+          <tr><td colspan="<?= $canWrite ? 8 : 7 ?>" class="text-center text-muted py-4">No hay líneas.</td></tr>
         <?php endif; ?>
       </tbody>
     </table>
