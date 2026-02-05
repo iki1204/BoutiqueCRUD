@@ -28,7 +28,7 @@ $flash = flash_get();
             <form method="post" class="d-grid gap-3">
               <input type="hidden" name="_csrf" value="<?= h(csrf_token()) ?>">
               <div>
-                <label class="form-label">Usuario MySQL</label>
+                <label class="form-label">Usuario</label>
                 <input class="form-control" name="username" autocomplete="username" required>
               </div>
               <div>
@@ -39,9 +39,6 @@ $flash = flash_get();
                 <i class="bi bi-box-arrow-in-right me-1"></i>Ingresar
               </button>
             </form>
-            <div class="text-muted small mt-3">
-              Ingresa con un usuario válido de MySQL (ej. root o adminBoutique).
-            </div>
           </div>
         </div>
         <div class="text-center text-muted small mt-3">

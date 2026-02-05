@@ -54,10 +54,12 @@ $visibleMeta = array_filter($meta, fn($def, $key) => auth_can_access($key), ARRA
             <div class="text-muted small"><?= h($page_subtitle ?? 'Panel de administración') ?></div>
           </div>
           <div class="d-flex gap-2">
-            <a class="btn btn-outline-secondary btn-sm" href="<?= url('/public/index.php') ?>"><i class="bi bi-house"></i></a>
-            <button class="btn btn-outline-secondary btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#helpCanvas">
+            <a class="btn btn-outline-secondary btn-sm" href="<?= url('/public/index.php') ?>">
+              <i class="bi bi-house"></i>
+            </a>
+            <a class="btn btn-outline-secondary btn-sm" href="<?= url('/public/profile.php') ?>">
               <i class="bi bi-person-circle"></i>
-            </button>
+            </a>
             <a class="btn btn-outline-danger btn-sm" href="<?= url('/public/logout.php') ?>">
               <i class="bi bi-box-arrow-right"></i>
             </a>
@@ -73,29 +75,10 @@ $visibleMeta = array_filter($meta, fn($def, $key) => auth_can_access($key), ARRA
         <?= $content ?>
 
         <div class="text-center text-muted small mt-5">
-          Hecho por Ikian Saa · <?= date('Y-m-d') ?>
+          © 2026 Boutique. Todos los derechos reservados.
         </div>
       </div>
     </main>
-  </div>
-
-  <div class="offcanvas offcanvas-end" tabindex="-1" id="helpCanvas">
-    <div class="offcanvas-header">
-      <h5 class="offcanvas-title">Ayuda rápida</h5>
-      <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
-    </div>
-    <div class="offcanvas-body">
-      <p class="mb-2"><strong>Instalación</strong></p>
-      <ol class="small">
-        <li>Crea la BD <code>boutique</code> en MySQL.</li>
-        <li>Importa <code>db/schema.sql</code>.</li>
-        <li>Opcional: importa <code>db/seed.sql</code> para datos de ejemplo.</li>
-        <li>Ajusta credenciales en <code>app/config.php</code>.</li>
-        <li>Levanta con Apache (XAMPP) apuntando a <code>/public</code>.</li>
-      </ol>
-      <hr>
-      <p class="small text-muted">Nota: En tu modelo la PK no es auto-increment. Por eso, el módulo de ventas calcula el siguiente ID con <code>MAX()+1</code>.</p>
-    </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

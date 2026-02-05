@@ -6,8 +6,15 @@ $title = "Detalle de Venta";
 $action = $_GET['a'] ?? 'list';
 $id = $_GET['id'] ?? null;
 $venta_id = $_GET['venta_id'] ?? null;
+$canWrite = auth_can_write('detalle_venta');
 
 csrf_check();
+
+if (!$canWrite && $action === 'delete') {
+  http_response_code(403);
+  echo "No tienes permisos para modificar el detalle de venta.";
+  exit;
+}
 
 if ($action === 'delete' && $id) {
   $pdo->beginTransaction();

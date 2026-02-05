@@ -1,5 +1,5 @@
 <?php
-// meta.php: definición de módulos/tablas para el dashboard y CRUD genérico.
+// Data para generar dinamicamente los módulos en /modules/generic.php ya que es mas simple así
 return [
   'categoria' => [
     'title' => 'Categorías',
@@ -78,7 +78,8 @@ return [
       'PRECIO' => ['label' => 'Precio', 'type' => 'number', 'step' => '0.01', 'required' => true],
     ],
   ],
-  // Ventas y Detalle Venta se manejan con módulos dedicados (por la lógica transaccional)
+
+
   'ventas' => [
     'title' => 'Ventas',
     'module' => 'ventas',

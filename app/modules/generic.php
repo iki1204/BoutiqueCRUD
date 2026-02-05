@@ -18,6 +18,7 @@ $cols = $meta['columns'];
 
 $action = $_GET['a'] ?? 'list';
 $id = $_GET['id'] ?? null;
+$canWrite = auth_can_write($module);
 
 function fk_options(PDO $pdo, array $ref): array {
   [$t,$idcol,$labelcol] = $ref;
@@ -25,6 +26,16 @@ function fk_options(PDO $pdo, array $ref): array {
 }
 
 csrf_check();
+
+if (!$canWrite && in_array($action, ['create', 'edit', 'delete'], true)) {
+  if ($_SERVER['REQUEST_METHOD'] === 'POST' || $action === 'delete') {
+    http_response_code(403);
+    echo "No tienes permisos para modificar este módulo.";
+    exit;
+  }
+  flash_set('warning', 'No tienes permisos para crear o editar en este módulo.');
+  redirect(url("/public/index.php?m=$module"));
+}
 
 if ($action === 'delete' && $id) {
   // delete

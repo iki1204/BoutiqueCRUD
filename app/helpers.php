@@ -72,6 +72,15 @@ function auth_can_access(?string $module): bool {
   return in_array($module, $allowed, true);
 }
 
+function auth_can_write(?string $module): bool {
+  if (!auth_can_access($module)) return false;
+  $role = auth_role();
+  if (!$role) return false;
+  $roles = auth_permissions();
+  if (!isset($roles[$role])) return false;
+  return !empty($roles[$role]['write']);
+}
+
 function auth_logout(): void {
   if (session_status() !== PHP_SESSION_ACTIVE) session_start();
   unset($_SESSION['auth']);
